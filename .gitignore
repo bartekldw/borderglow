@@ -1,0 +1,32 @@
+# Logs
+*.log
+logs/
+log/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+
+# VS Code
+.vscode/
+
+# JetBrains
+.idea/
+
+# Build artifacts
+build/
+out/
+dist/
+
+# Cache
+.cache/
+
+# Binaries
+*.o
+*.so
+*.a
+*.out
