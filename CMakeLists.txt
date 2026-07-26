@@ -20,6 +20,7 @@ find_package(KWin REQUIRED)
 
 add_library(borderglow_alpha MODULE
     src/borderglow.cpp
+    src/borderglow_logging.cpp
     include/borderglow.hpp
 )
 

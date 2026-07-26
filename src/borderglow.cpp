@@ -20,12 +20,22 @@
 
 namespace KWin {
 
-    BorderGlow::BorderGlow() {}
+    BorderGlow::BorderGlow() {
+        qCDebug(KWIN_BORDERGLOW) << "[kwin_borders] Effect constructed - plugin loaded successfully";
+    }
 
-    BorderGlow::~BorderGlow() {}
+    BorderGlow::~BorderGlow() = default;
 
     bool BorderGlow::supported() {
-        return effects->isOpenGLCompositing();
+        const auto glResult = effects->isOpenGLCompositing();
+
+        if(glResult){
+            qCDebug(KWIN_BORDERGLOW) << "[kwin_borders] [supported] OpenGL compositing available, effect supported";
+        } else{
+            qWarning() << "[kwin_borders] [supported] isOpenGLCompositing: OpenGL compositing available, effect unsupported";
+        }
+
+        return glResult;
     }
 
     bool BorderGlow::enabledByDefault() {
