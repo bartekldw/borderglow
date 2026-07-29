@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/effects/borderglow">
+        <file alias="border.vert">border.vert</file>
+        <file alias="border.frag">border.frag</file>
+    </qresource>
+</RCC>

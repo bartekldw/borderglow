@@ -4,6 +4,10 @@
 cmake_minimum_required(VERSION 3.16)
 project(kwin-border-glow)
 
+set(QT_MIN_VERSION "6.5.0")
+set(KF_MIN_VERSION "6.0.0")
+set(QT_DEFAULT_MAJOR_VERSION 6)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -22,6 +26,7 @@ add_library(borderglow_alpha MODULE
     src/borderglow.cpp
     src/borderglow_logging.cpp
     include/borderglow.hpp
+    include/shaders/resources.qrc
 )
 
 target_include_directories(borderglow_alpha PRIVATE
