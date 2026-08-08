@@ -92,6 +92,11 @@ namespace KWin {
         const qreal quadW = windowGeo.width() + 2.0 * marginX;
         const qreal quadH = windowGeo.height() + 2.0 * marginY;
 
+        const RectF maximizeArea = effects->clientArea(MaximizeArea, w);
+        const bool maximized = (windowGeo.width() >= maximizeArea.width() - 1.0) &&
+                            (windowGeo.height() >= maximizeArea.height() - 1.0);
+        const float radius = maximized ? 0.0f : BORDER_RADIUS;
+        
         QMatrix4x4 mvp = viewport.projectionMatrix();
         mvp.translate(windowGeo.x(), windowGeo.y());
         mvp.translate(data.xTranslation(), data.yTranslation(), data.zTranslation());
@@ -104,6 +109,7 @@ namespace KWin {
         m_shader->setUniform("modelViewProjectionMatrix", mvp);
         m_shader->setUniform("u_size", QVector2D(quadW, quadH));
         m_shader->setUniform("u_inner_size", QVector2D(windowGeo.width(), windowGeo.height()));
+        m_shader->setUniform("u_radius", radius);
         m_shader->setUniform("u_border", BORDER_THICKNESS);
 
         m_shader->setUniform("u_color", QVector4D(BORDER_COLOR[0], BORDER_COLOR[1], BORDER_COLOR[2], BORDER_COLOR[3]));

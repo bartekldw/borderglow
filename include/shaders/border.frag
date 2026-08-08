@@ -1,19 +1,37 @@
-uniform vec2  u_size;
-uniform vec2  u_inner_size;
+#ifdef GL_ES
+precision highp float;
+#endif
+
+varying vec2 v_texcoord;
+
+uniform vec2 u_size;
+uniform vec2 u_inner_size;
+uniform float u_radius;
 uniform float u_border;
-uniform vec4  u_color;
+uniform vec4 u_color;
 
-in vec2 v_texcoord;
-out vec4 fragColor;
+float sdfRoundedRect(vec2 p, vec2 halfSize, float radius)
+{
+    vec2 d = abs(p) - halfSize + vec2(radius);
+    if (radius < 0.001) {
+        return max(d.x, d.y);
+    }
+    return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0) - radius;
+}
 
-void main() {
-    vec2 pos    = v_texcoord * u_size;
-    vec2 margin = (u_size - u_inner_size) * 0.5;
+void main()
+{
+    vec2 uv = v_texcoord * u_size;
+    vec2 center = u_size * 0.5;
+    vec2 p = uv - center;
 
-    vec2 distFromInner = min(pos - margin, (u_size - margin) - pos);
-    float inner = min(distFromInner.x, distFromInner.y);
+    vec2 halfSize = u_inner_size * 0.5;
+    float dist = sdfRoundedRect(p, halfSize, u_radius);
 
-    float alpha = (inner > -u_border && inner < u_border) ? 1.0 : 0.0;
+    float aa = 1.0;
 
-    fragColor = vec4(u_color.rgb, u_color.a * alpha);
+    float borderOuter = dist - u_border;
+    float borderMask = (1.0 - smoothstep(-aa, aa, borderOuter)) * smoothstep(-aa, aa, dist) * step(0.001, u_border);
+
+    gl_FragColor = vec4(u_color.rgb, u_color.a * borderMask);
 }
