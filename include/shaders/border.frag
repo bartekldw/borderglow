@@ -8,7 +8,8 @@ uniform vec2 u_size;
 uniform vec2 u_inner_size;
 uniform float u_radius;
 uniform float u_border;
-uniform vec4 u_color;
+uniform vec4 u_color1;
+uniform vec4 u_color2;
 
 float sdfRoundedRect(vec2 p, vec2 halfSize, float radius)
 {
@@ -33,5 +34,8 @@ void main()
     float borderOuter = dist - u_border;
     float borderMask = (1.0 - smoothstep(-aa, aa, borderOuter)) * smoothstep(-aa, aa, dist) * step(0.001, u_border);
 
-    gl_FragColor = vec4(u_color.rgb, u_color.a * borderMask);
+    float t = v_texcoord.y;
+    vec4 gradColor = mix(u_color1, u_color2, t);
+
+    gl_FragColor = vec4(gradColor.rgb, gradColor.a * borderMask);
 }
