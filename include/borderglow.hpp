@@ -17,7 +17,9 @@ namespace KWin {
     inline constexpr float BORDER_MARGIN = 4.0f;
     inline constexpr float BORDER_THICKNESS = 2.0f;
     inline constexpr float BORDER_RADIUS = 8.0f;
-    inline constexpr float BORDER_COLOR[4] = {0.0f, 1.0f, 0.55f, 1.0f};
+
+    inline constexpr float BORDER_COLOR_GRAD1[4] = {0.55f, 0.15f, 0.95f, 1.0f};
+    inline constexpr float BORDER_COLOR_GRAD2[4] = {0.0f, 0.9f, 1.0f, 1.0f};
 
     class BorderGlow : public Effect {
         Q_OBJECT
