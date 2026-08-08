@@ -112,8 +112,9 @@ namespace KWin {
         m_shader->setUniform("u_radius", radius);
         m_shader->setUniform("u_border", BORDER_THICKNESS);
 
-        m_shader->setUniform("u_color1", QVector4D(BORDER_COLOR_GRAD1[0], BORDER_COLOR_GRAD1[1], BORDER_COLOR_GRAD1[2], BORDER_COLOR_GRAD1[3]));
-        m_shader->setUniform("u_color2", QVector4D(BORDER_COLOR_GRAD2[0], BORDER_COLOR_GRAD2[1], BORDER_COLOR_GRAD2[2], BORDER_COLOR_GRAD2[3]));
+        const float finalAlpha = 1.0f * static_cast<float>(data.opacity());
+        m_shader->setUniform("u_color1", QVector4D(BORDER_COLOR_GRAD1[0], BORDER_COLOR_GRAD1[1], BORDER_COLOR_GRAD1[2], finalAlpha));
+        m_shader->setUniform("u_color2", QVector4D(BORDER_COLOR_GRAD2[0], BORDER_COLOR_GRAD2[1], BORDER_COLOR_GRAD2[2], finalAlpha));
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
