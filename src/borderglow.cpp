@@ -18,6 +18,7 @@
 
 #include "borderglow.hpp"
 #include "borderglow_logging.hpp"
+#include "glowrules.hpp"
 
 
 namespace KWin {
@@ -79,6 +80,10 @@ namespace KWin {
                                    EffectWindow *w, int mask, const Region &deviceRegion, WindowPaintData &data) {
 
         effects->paintWindow(renderTarget, viewport, w, mask, deviceRegion, data);
+
+        if(!borderglow::glowRules().canGlow(w)){
+            return;
+        }
 
         if (!m_shader) {
             return;

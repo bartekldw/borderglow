@@ -25,8 +25,10 @@ find_package(KWin REQUIRED)
 add_library(borderglow_alpha MODULE
     src/borderglow.cpp
     src/borderglow_logging.cpp
+    src/glowrules.cpp
     include/borderglow.hpp
     include/shaders/resources.qrc
+    include/glowrules.hpp
 )
 
 target_include_directories(borderglow_alpha PRIVATE
