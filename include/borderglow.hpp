@@ -29,6 +29,7 @@ namespace KWin {
         Q_OBJECT
 
     private:
+        void slotWindowClosed(EffectWindow *w);
         QHash<EffectWindow *, QRectF> m_lastGeometry;
         std::unique_ptr<GLShader> m_shader;
 

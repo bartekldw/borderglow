@@ -28,16 +28,24 @@ namespace KWin {
 
     BorderGlow::BorderGlow() {
         qCDebug(KWIN_BORDERGLOW) << "[kwin_borders] Effect constructed - plugin loaded successfully";
+
         m_shader = ShaderManager::instance()->generateShaderFromFile(
         ShaderTrait{},
         QStringLiteral(":/effects/borderglow/border.vert"),
         QStringLiteral(":/effects/borderglow/border.frag"));
+
         if (!m_shader) {
             qWarning() << "[kwin_borders] Shader compilation failed";
         }
+
+        connect(effects, &EffectsHandler::windowClosed, this, &BorderGlow::slotWindowClosed);
     }
 
     BorderGlow::~BorderGlow() = default;
+
+    void BorderGlow::slotWindowClosed(EffectWindow *w) {
+        m_lastGeometry.remove(w);
+    }
 
 // Reports whether the effect can run: it requires an OpenGL compositing backend.
 // The result is logged at debug level on success and as a warning otherwise
