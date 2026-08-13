@@ -33,10 +33,13 @@ namespace KWin {
         QHash<EffectWindow *, QRectF> m_lastGeometry;
         std::unique_ptr<GLShader> m_shader;
 
-    public:
+        bool m_skipFullscreen = true;
 
+    public:
         BorderGlow();
         ~BorderGlow() override;
+
+        void reconfigure(ReconfigureFlags flags) override;
 
         void prePaintWindow(RenderView *view, EffectWindow *w, WindowPrePaintData &data) override;
         void paintWindow(const RenderTarget &renderTarget, const RenderViewport &viewport,

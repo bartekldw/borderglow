@@ -16,6 +16,7 @@
 #include <core/renderviewport.h>
 #include <opengl/glutils.h>
 
+#include "borderglowsettings.h"
 #include "borderglow.hpp"
 #include "borderglow_logging.hpp"
 #include "glowrules.hpp"
@@ -39,12 +40,26 @@ namespace KWin {
         }
 
         connect(effects, &EffectsHandler::windowClosed, this, &BorderGlow::slotWindowClosed);
+        reconfigure(ReconfigureAll);
     }
 
     BorderGlow::~BorderGlow() = default;
 
     void BorderGlow::slotWindowClosed(EffectWindow *w) {
         m_lastGeometry.remove(w);
+    }
+
+// Reloads plugin settings from the config file and applies them to internal state.
+// Repaints the screen to reflect any visual changes
+
+    void BorderGlow::reconfigure(ReconfigureFlags flags) {
+        Q_UNUSED(flags)
+        
+        BorderGlowSettings::self()->config()->reparseConfiguration();
+        BorderGlowSettings::self()->read();
+        
+        m_skipFullscreen = BorderGlowSettings::skipFullscreen();
+        effects->addRepaintFull();
     }
 
 // Reports whether the effect can run: it requires an OpenGL compositing backend.
