@@ -103,8 +103,8 @@ namespace KWin {
                                    EffectWindow *w, int mask, const Region &deviceRegion, WindowPaintData &data) {
 
         effects->paintWindow(renderTarget, viewport, w, mask, deviceRegion, data);
-
-        if(!borderglow::glowRules().canGlow(w)){
+        
+        if(!borderglow::glowRules().canGlow(w, m_skipFullscreen)){
             return;
         }
 
