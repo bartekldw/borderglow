@@ -1,0 +1,4 @@
+File=borderglow.kcfg
+ClassName=BorderGlowSettings
+Singleton=true
+Mutators=true

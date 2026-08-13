@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BorderGlowConfigForm</class>
+ <widget class="QWidget" name="BorderGlowConfigForm">
+  <layout class="QVBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QCheckBox" name="kcfg_SkipFullscreen">
+     <property name="text">
+      <string>Hide border on fullscreen windows</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
