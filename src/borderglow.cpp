@@ -63,6 +63,7 @@ namespace KWin {
         m_skipFullscreen = BorderGlowSettings::skipFullscreen();
         m_color1 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor1());
         m_color2 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor2());
+        m_radius = BorderGlowSettings::borderRadius();
 
         effects->addRepaintFull();
     }
@@ -128,7 +129,7 @@ namespace KWin {
         const RectF maximizeArea = effects->clientArea(MaximizeArea, w);
         const bool maximized = (windowGeo.width() >= maximizeArea.width() - 1.0) &&
                             (windowGeo.height() >= maximizeArea.height() - 1.0);
-        const float radius = maximized ? 0.0f : BORDER_RADIUS;
+        const float radius = maximized ? 0.0f : m_radius;
         
         QMatrix4x4 mvp = viewport.projectionMatrix();
         mvp.translate(windowGeo.x(), windowGeo.y());

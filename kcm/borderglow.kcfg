@@ -17,9 +17,19 @@
             <label>First gradient color</label>
             <default>255,0,128</default>
         </entry>
+
         <entry name="GradientColor2" type="Color">
             <label>Second gradient color</label>
             <default>0,128,255</default>
         </entry>
+        
+        <entry name="BorderRadius" type="Int">
+            <label>Border corner radius</label>
+            <default>8</default>
+            <min>0</min>
+            <max>32</max>
+        </entry>
     </group>
+
+    
 </kcfg>
