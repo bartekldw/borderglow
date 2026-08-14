@@ -59,6 +59,23 @@ namespace KWin {
         BorderGlowSettings::self()->read();
         
         m_skipFullscreen = BorderGlowSettings::skipFullscreen();
+        
+        QColor color1 = BorderGlowSettings::gradientColor1();
+        QColor color2 = BorderGlowSettings::gradientColor2();
+
+        m_color1 = QVector4D(
+            static_cast<float>(color1.redF()),
+            static_cast<float>(color1.greenF()),
+            static_cast<float>(color1.blueF()),
+            static_cast<float>(color1.alphaF())
+        );
+        m_color2 = QVector4D(
+            static_cast<float>(color2.redF()),
+            static_cast<float>(color2.greenF()),
+            static_cast<float>(color2.blueF()),
+            static_cast<float>(color2.alphaF())
+        );
+
         effects->addRepaintFull();
     }
 
@@ -141,8 +158,8 @@ namespace KWin {
         m_shader->setUniform("u_border", BORDER_THICKNESS);
 
         const float finalAlpha = 1.0f * static_cast<float>(data.opacity());
-        m_shader->setUniform("u_color1", QVector4D(BORDER_COLOR_GRAD1[0], BORDER_COLOR_GRAD1[1], BORDER_COLOR_GRAD1[2], finalAlpha));
-        m_shader->setUniform("u_color2", QVector4D(BORDER_COLOR_GRAD2[0], BORDER_COLOR_GRAD2[1], BORDER_COLOR_GRAD2[2], finalAlpha));
+        m_shader->setUniform("u_color1", QVector4D(m_color1[0], m_color1[1], m_color1[2], m_color1[3] * finalAlpha));
+        m_shader->setUniform("u_color2", QVector4D(m_color2[0], m_color2[1], m_color2[2], m_color2[3] * finalAlpha));
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
