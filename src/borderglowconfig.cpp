@@ -18,6 +18,11 @@ namespace KWin {
 
     BorderGlowConfig::BorderGlowConfig(QObject *parent, const KPluginMetaData &data) : KCModule(parent, data) {
         m_ui.setupUi(widget());
+
+        connect(m_ui.kcfg_BorderRadius, &QSlider::valueChanged, m_ui.borderRadiusPreview, &QSpinBox::setValue);
+        connect(m_ui.borderRadiusPreview, QOverload<int>::of(&QSpinBox::valueChanged), m_ui.kcfg_BorderRadius, &QSlider::setValue);
+        m_ui.borderRadiusPreview->setValue(m_ui.kcfg_BorderRadius->value());
+        
         addConfig(BorderGlowSettings::self(), widget());
     }
 
