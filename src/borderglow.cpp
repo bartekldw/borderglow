@@ -64,6 +64,7 @@ namespace KWin {
         m_color1 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor1());
         m_color2 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor2());
         m_radius = BorderGlowSettings::borderRadius();
+        m_thickness = BorderGlowSettings::borderThickness();
 
         effects->addRepaintFull();
     }
@@ -144,7 +145,7 @@ namespace KWin {
         m_shader->setUniform("u_size", QVector2D(quadW, quadH));
         m_shader->setUniform("u_inner_size", QVector2D(windowGeo.width(), windowGeo.height()));
         m_shader->setUniform("u_radius", radius);
-        m_shader->setUniform("u_border", BORDER_THICKNESS);
+        m_shader->setUniform("u_border", m_thickness);
 
         const float finalAlpha = 1.0f * static_cast<float>(data.opacity());
         m_shader->setUniform("u_color1", QVector4D(m_color1[0], m_color1[1], m_color1[2], m_color1[3] * finalAlpha));

@@ -29,6 +29,13 @@
             <min>0</min>
             <max>32</max>
         </entry>
+
+        <entry name="BorderThickness" type="Int">
+            <label>Border thickness</label>
+            <default>2</default>
+            <min>1</min>
+            <max>6</max>
+        </entry>
     </group>
 
     
