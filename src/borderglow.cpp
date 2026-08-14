@@ -65,6 +65,7 @@ namespace KWin {
         m_color2 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor2());
         m_radius = BorderGlowSettings::borderRadius();
         m_thickness = BorderGlowSettings::borderThickness();
+        m_margin = BorderGlowSettings::borderMargin();
 
         effects->addRepaintFull();
     }
@@ -121,8 +122,8 @@ namespace KWin {
 
         const QRectF windowGeo = w->frameGeometry();
 
-        const qreal marginX = data.xScale() > 0.0001 ? BORDER_MARGIN / data.xScale() : BORDER_MARGIN;
-        const qreal marginY = data.yScale() > 0.0001 ? BORDER_MARGIN / data.yScale() : BORDER_MARGIN;
+        const qreal marginX = data.xScale() > 0.0001 ? m_margin / data.xScale() : m_margin;
+        const qreal marginY = data.yScale() > 0.0001 ? m_margin / data.yScale() : m_margin;
 
         const qreal quadW = windowGeo.width() + 2.0 * marginX;
         const qreal quadH = windowGeo.height() + 2.0 * marginY;

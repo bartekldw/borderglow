@@ -38,6 +38,7 @@ namespace KWin {
         QVector4D m_color2;
         float m_radius = 0.f;
         float m_thickness = 0.f;
+        float m_margin = 0.f;
 
     public:
         BorderGlow();
