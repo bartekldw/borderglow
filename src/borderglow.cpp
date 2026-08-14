@@ -93,8 +93,7 @@ namespace KWin {
 // both the current and previous frame geometry so stale border pixels are cleared
 
     void BorderGlow::prePaintWindow(RenderView *view, EffectWindow *w, WindowPrePaintData &data) {
-        const QRectF current = w->frameGeometry().adjusted(
-            -BORDER_MARGIN, -BORDER_MARGIN, BORDER_MARGIN, BORDER_MARGIN);
+        const QRectF current = w->frameGeometry().adjusted(-m_margin, -m_margin, m_margin, m_margin);
 
         w->addLayerRepaint(current);
         if (m_lastGeometry.contains(w)) {
@@ -129,8 +128,7 @@ namespace KWin {
         const qreal quadH = windowGeo.height() + 2.0 * marginY;
 
         const RectF maximizeArea = effects->clientArea(MaximizeArea, w);
-        const bool maximized = (windowGeo.width() >= maximizeArea.width() - 1.0) &&
-                            (windowGeo.height() >= maximizeArea.height() - 1.0);
+        const bool maximized = (windowGeo.width() >= maximizeArea.width() - 1.0) && (windowGeo.height() >= maximizeArea.height() - 1.0);
         const float radius = maximized ? 0.0f : m_radius;
         
         QMatrix4x4 mvp = viewport.projectionMatrix();
