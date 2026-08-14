@@ -1,9 +1,16 @@
-#include "borderglowconfig.hpp"
-#include "borderglowsettings.h"
-#include <KPluginFactory>
+/*
+ * kwin_borders KWin plugin
+ * SPDX-FileCopyrightText: 2026 Bartłomiej Ludew <bartekldw>
+ * SPDX-License-Identifier: MIT
+*/
 
+#include <KPluginFactory>
 #include <QDBusConnection>
 #include <QDBusMessage>
+
+#include "borderglowconfig.hpp"
+#include "borderglowsettings.h"
+
 
 namespace KWin {
 

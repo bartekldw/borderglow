@@ -1,4 +1,5 @@
 /*
+ * kwin_borders KWin plugin
  * SPDX-FileCopyrightText: 2026 Bartłomiej Ludew <bartekldw>
  * SPDX-License-Identifier: MIT
 */

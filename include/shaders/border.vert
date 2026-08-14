@@ -1,3 +1,9 @@
+/*
+ * kwin_borders KWin plugin
+ * SPDX-FileCopyrightText: 2026 Bartłomiej Ludew <bartekldw>
+ * SPDX-License-Identifier: MIT
+*/
+
 uniform mat4 modelViewProjectionMatrix;
 
 in vec2 position;
