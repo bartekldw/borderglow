@@ -20,6 +20,7 @@
 #include "borderglow.hpp"
 #include "borderglow_logging.hpp"
 #include "glowrules.hpp"
+#include "utils.hpp"
 
 
 namespace KWin {
@@ -59,22 +60,8 @@ namespace KWin {
         BorderGlowSettings::self()->read();
         
         m_skipFullscreen = BorderGlowSettings::skipFullscreen();
-        
-        QColor color1 = BorderGlowSettings::gradientColor1();
-        QColor color2 = BorderGlowSettings::gradientColor2();
-
-        m_color1 = QVector4D(
-            static_cast<float>(color1.redF()),
-            static_cast<float>(color1.greenF()),
-            static_cast<float>(color1.blueF()),
-            static_cast<float>(color1.alphaF())
-        );
-        m_color2 = QVector4D(
-            static_cast<float>(color2.redF()),
-            static_cast<float>(color2.greenF()),
-            static_cast<float>(color2.blueF()),
-            static_cast<float>(color2.alphaF())
-        );
+        m_color1 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor1());
+        m_color2 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor2());
 
         effects->addRepaintFull();
     }
