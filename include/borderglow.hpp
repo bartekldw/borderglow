@@ -30,8 +30,9 @@ namespace KWin {
         bool m_skipFullscreen = true;
         bool m_drawOnNormalWindows = true;
         bool m_drawOnDialogs = true;
-        bool m_drawOnDocks = true;
-        
+        bool m_drawOnDocks = false;
+        bool m_drawOnPopups = false;
+
         QVector4D m_color1;
         QVector4D m_color2;
         float m_radius = 0.f;

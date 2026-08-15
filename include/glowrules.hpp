@@ -15,7 +15,7 @@ namespace borderglow {
 
         class GlowRules {
         public:
-            bool canGlow(const KWin::EffectWindow* window, bool skipFullscreen, bool drawOnNormalWindows, bool drawOnDialogs, bool drawonDocks) const;
+            bool canGlow(const KWin::EffectWindow* window, bool skipFullscreen, bool drawOnNormalWindows, bool drawOnDialogs, bool drawonDocks, bool drawOnPopups) const;
             static GlowRules& getInstance() {
                 static GlowRules instance;
                 return instance;

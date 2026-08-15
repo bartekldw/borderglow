@@ -22,6 +22,10 @@
             <label>Draw on docks</label>
             <default>false</default>
         </entry>
+        <entry name="DrawPopups" type="Bool">
+            <label>Draw on popups</label>
+            <default>false</default>
+        </entry>
     </group>
 
     <group name="Appearance">
