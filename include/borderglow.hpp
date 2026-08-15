@@ -28,6 +28,7 @@ namespace KWin {
         std::unique_ptr<GLShader> m_shader;
 
         bool m_skipFullscreen = true;
+        bool m_drawOnNormalWindows = true;
         QVector4D m_color1;
         QVector4D m_color2;
         float m_radius = 0.f;

@@ -10,6 +10,10 @@
             <label>Hide border on fullscreen windows</label>
             <default>true</default>
         </entry>
+        <entry name="DrawNormalWindows" type="Bool">
+            <label>Draw on normal windows</label>
+            <default>true</default>
+        </entry>
     </group>
 
     <group name="Appearance">

@@ -61,6 +61,7 @@ namespace KWin {
         BorderGlowSettings::self()->read();
         
         m_skipFullscreen = BorderGlowSettings::skipFullscreen();
+        m_drawOnNormalWindows = BorderGlowSettings::drawNormalWindows();
         m_color1 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor1());
         m_color2 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor2());
         m_radius = BorderGlowSettings::borderRadius();
@@ -111,7 +112,7 @@ namespace KWin {
 
         effects->paintWindow(renderTarget, viewport, w, mask, deviceRegion, data);
         
-        if(!borderglow::glowRules().canGlow(w, m_skipFullscreen)){
+        if(!borderglow::glowRules().canGlow(w, m_skipFullscreen, m_drawOnNormalWindows)){
             return;
         }
 

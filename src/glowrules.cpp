@@ -13,7 +13,7 @@ namespace borderglow::modules {
 // Determine if border should be displayed on given KWin::EffectWindow depending on its state
 // TODO: Will be driven by kcfg module to configure on which windows should border be drawn
 
-    bool GlowRules::canGlow(const KWin::EffectWindow* window, bool skipFullscreen) const {
+    bool GlowRules::canGlow(const KWin::EffectWindow* window, bool skipFullscreen, bool drawOnNormalWindows) const {
         if (window->isDesktop() || window->isLockScreen() || window->isDNDIcon() || window->isOutline()) {
             return false;
         }
@@ -21,7 +21,10 @@ namespace borderglow::modules {
         if(skipFullscreen && window->isFullScreen()) {
             return false;
         }
-        
+
+        if (window->isNormalWindow()) {
+            return drawOnNormalWindows;
+        }
         return true;
     }
 }
