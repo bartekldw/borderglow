@@ -14,6 +14,10 @@
             <label>Draw on normal windows</label>
             <default>true</default>
         </entry>
+        <entry name="DrawDialogs" type="Bool">
+            <label>Draw on dialogs</label>
+            <default>true</default>
+        </entry>
     </group>
 
     <group name="Appearance">
