@@ -65,6 +65,7 @@ namespace KWin {
         m_drawOnDialogs = BorderGlowSettings::drawDialogs();
         m_drawOnDocks = BorderGlowSettings::drawDocks();
         m_drawOnPopups = BorderGlowSettings::drawPopups();
+        m_drawOther = BorderGlowSettings::drawOther();
 
         m_color1 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor1());
         m_color2 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor2());
@@ -116,7 +117,7 @@ namespace KWin {
 
         effects->paintWindow(renderTarget, viewport, w, mask, deviceRegion, data);
         
-        if(!borderglow::glowRules().canGlow(w, m_skipFullscreen, m_drawOnNormalWindows, m_drawOnDialogs, m_drawOnDocks, m_drawOnPopups)){
+        if(!borderglow::glowRules().canGlow(w, m_skipFullscreen, m_drawOnNormalWindows, m_drawOnDialogs, m_drawOnDocks, m_drawOnPopups, m_drawOther)){
             return;
         }
 

@@ -26,6 +26,10 @@
             <label>Draw on popups</label>
             <default>false</default>
         </entry>
+        <entry name="DrawOther" type="Bool">
+            <label>Draw on other windows</label>
+            <default>false</default>
+        </entry>
     </group>
 
     <group name="Appearance">

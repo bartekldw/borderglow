@@ -32,6 +32,7 @@ namespace KWin {
         bool m_drawOnDialogs = true;
         bool m_drawOnDocks = false;
         bool m_drawOnPopups = false;
+        bool m_drawOther = false;
 
         QVector4D m_color1;
         QVector4D m_color2;
