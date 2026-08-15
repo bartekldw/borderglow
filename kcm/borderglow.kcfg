@@ -18,6 +18,10 @@
             <label>Draw on dialogs</label>
             <default>true</default>
         </entry>
+        <entry name="DrawDocks" type="Bool">
+            <label>Draw on docks</label>
+            <default>false</default>
+        </entry>
     </group>
 
     <group name="Appearance">
