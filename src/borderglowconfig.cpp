@@ -26,11 +26,7 @@ namespace KWin {
         connect(m_ui.kcfg_BorderThickness, &QSlider::valueChanged, m_ui.borderThicknessPreview, &QSpinBox::setValue);
         connect(m_ui.borderThicknessPreview, QOverload<int>::of(&QSpinBox::valueChanged), m_ui.kcfg_BorderThickness, &QSlider::setValue);
         m_ui.borderThicknessPreview->setValue(m_ui.kcfg_BorderThickness->value());
-
-        connect(m_ui.kcfg_BorderMargin, &QSlider::valueChanged, m_ui.borderMarginPreview, &QSpinBox::setValue);
-        connect(m_ui.borderMarginPreview, QOverload<int>::of(&QSpinBox::valueChanged), m_ui.kcfg_BorderMargin, &QSlider::setValue);
-        m_ui.borderMarginPreview->setValue(m_ui.kcfg_BorderMargin->value());
-
+        
         addConfig(BorderGlowSettings::self(), widget());
     }
 

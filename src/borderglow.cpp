@@ -71,8 +71,8 @@ namespace KWin {
         m_color2 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor2());
         m_radius = BorderGlowSettings::borderRadius();
         m_thickness = BorderGlowSettings::borderThickness();
-        m_margin = BorderGlowSettings::borderMargin();
-
+        m_margin = m_thickness;
+        
         effects->addRepaintFull();
     }
 

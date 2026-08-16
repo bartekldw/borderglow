@@ -56,14 +56,6 @@
             <min>1</min>
             <max>6</max>
         </entry>
-
-        <entry name="BorderMargin" type="Int">
-            <label>Border margin</label>
-            <default>0</default>
-            <min>0</min>
-            <max>16</max>
-        </entry>
     </group>
-
     
 </kcfg>
