@@ -134,9 +134,18 @@ namespace KWin {
         const qreal quadH = windowGeo.height() + 2.0 * marginY;
 
         const RectF maximizeArea = effects->clientArea(MaximizeArea, w);
-        const bool maximized = (windowGeo.width() >= maximizeArea.width() - 1.0) && (windowGeo.height() >= maximizeArea.height() - 1.0);
+
+        constexpr qreal kEpsilon = 0.5;
+        constexpr qreal kScaleEpsilon = 0.001;
+
+        // CSD can report a stuck maximized frameGeometry() while actually being rendered smaller/offset via the paint transform
+        // Excluding transformed windows avoids the false positive
+
+        const bool geometryMatches = qAbs(windowGeo.width()  - maximizeArea.width())  <= kEpsilon && qAbs(windowGeo.height() - maximizeArea.height()) <= kEpsilon;
+        const bool isBeingTransformed = qAbs(data.xScale() - 1.0) > kScaleEpsilon || qAbs(data.yScale() - 1.0) > kScaleEpsilon || !qFuzzyIsNull(data.xTranslation()) || !qFuzzyIsNull(data.yTranslation());
+        const bool maximized = geometryMatches && !isBeingTransformed;
         const float radius = maximized ? 0.0f : m_radius;
-        
+
         QMatrix4x4 mvp = viewport.projectionMatrix();
         mvp.translate(windowGeo.x(), windowGeo.y());
         mvp.translate(data.xTranslation(), data.yTranslation(), data.zTranslation());
