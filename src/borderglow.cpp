@@ -125,6 +125,8 @@ namespace KWin {
             return;
         }
 
+        const qreal dpr = viewport.scale();
+
         const QRectF windowGeo = w->frameGeometry();
 
         const qreal marginX = data.xScale() > 0.0001 ? m_uniformProperties.margin / data.xScale() : m_uniformProperties.margin;
@@ -147,9 +149,10 @@ namespace KWin {
         const float radius = maximized ? 0.0f : m_uniformProperties.radius;
 
         QMatrix4x4 mvp = viewport.projectionMatrix();
-        mvp.translate(windowGeo.x(), windowGeo.y());
+        mvp.translate(windowGeo.x() * dpr, windowGeo.y() * dpr);
         mvp.translate(data.xTranslation(), data.yTranslation(), data.zTranslation());
         mvp.scale(data.xScale(), data.yScale(), data.zScale());
+        mvp.scale(dpr, dpr, 1.0);
         mvp.translate(-marginX, -marginY);
 
         ShaderManager *sm = ShaderManager::instance();
