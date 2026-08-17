@@ -6,6 +6,7 @@
 
 #pragma once
 #include <effect/effect.h>
+#include "borderproperties.hpp"
 
 namespace borderglow {
     namespace modules {
@@ -15,7 +16,7 @@ namespace borderglow {
 
         class GlowRules {
         public:
-            bool canGlow(const KWin::EffectWindow* window, bool skipFullscreen, bool drawOnNormalWindows, bool drawOnDialogs, bool drawonDocks, bool drawOnPopups, bool drawOther) const;
+            bool canGlow(const KWin::EffectWindow* window, const BehaviourProperties& properties) const;
             static GlowRules& getInstance() {
                 static GlowRules instance;
                 return instance;

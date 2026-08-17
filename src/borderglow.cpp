@@ -59,19 +59,19 @@ namespace KWin {
         
         BorderGlowSettings::self()->config()->reparseConfiguration();
         BorderGlowSettings::self()->read();
-        
-        m_skipFullscreen = BorderGlowSettings::skipFullscreen();
-        m_drawOnNormalWindows = BorderGlowSettings::drawNormalWindows();
-        m_drawOnDialogs = BorderGlowSettings::drawDialogs();
-        m_drawOnDocks = BorderGlowSettings::drawDocks();
-        m_drawOnPopups = BorderGlowSettings::drawPopups();
-        m_drawOther = BorderGlowSettings::drawOther();
+     
+        m_behaviourProperties.skipFullscreen = BorderGlowSettings::skipFullscreen();
+        m_behaviourProperties.drawOnNormalWindows = BorderGlowSettings::drawNormalWindows();
+        m_behaviourProperties.drawOnDialogs = BorderGlowSettings::drawDialogs();
+        m_behaviourProperties.drawOnDocks = BorderGlowSettings::drawDocks();
+        m_behaviourProperties.drawOnPopups = BorderGlowSettings::drawPopups();
+        m_behaviourProperties.drawOther = BorderGlowSettings::drawOther();
 
-        m_color1 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor1());
-        m_color2 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor2());
-        m_radius = BorderGlowSettings::borderRadius();
-        m_thickness = BorderGlowSettings::borderThickness();
-        m_margin = m_thickness;
+        m_uniformProperties.color1 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor1());
+        m_uniformProperties.color2 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor2());
+        m_uniformProperties.radius = BorderGlowSettings::borderRadius();
+        m_uniformProperties.thickness = BorderGlowSettings::borderThickness();
+        m_uniformProperties.margin = m_uniformProperties.thickness;
         
         effects->addRepaintFull();
     }
@@ -99,7 +99,7 @@ namespace KWin {
 // both the current and previous frame geometry so stale border pixels are cleared
 
     void BorderGlow::prePaintWindow(RenderView *view, EffectWindow *w, WindowPrePaintData &data) {
-        const QRectF current = w->frameGeometry().adjusted(-m_margin, -m_margin, m_margin, m_margin);
+        const QRectF current = w->frameGeometry().adjusted(-m_uniformProperties.margin, -m_uniformProperties.margin, m_uniformProperties.margin, m_uniformProperties.margin);
 
         w->addLayerRepaint(current);
         if (m_lastGeometry.contains(w)) {
@@ -117,7 +117,7 @@ namespace KWin {
 
         effects->paintWindow(renderTarget, viewport, w, mask, deviceRegion, data);
         
-        if(!borderglow::glowRules().canGlow(w, m_skipFullscreen, m_drawOnNormalWindows, m_drawOnDialogs, m_drawOnDocks, m_drawOnPopups, m_drawOther)){
+        if(!borderglow::glowRules().canGlow(w, m_behaviourProperties)){
             return;
         }
 
@@ -127,8 +127,8 @@ namespace KWin {
 
         const QRectF windowGeo = w->frameGeometry();
 
-        const qreal marginX = data.xScale() > 0.0001 ? m_margin / data.xScale() : m_margin;
-        const qreal marginY = data.yScale() > 0.0001 ? m_margin / data.yScale() : m_margin;
+        const qreal marginX = data.xScale() > 0.0001 ? m_uniformProperties.margin / data.xScale() : m_uniformProperties.margin;
+        const qreal marginY = data.yScale() > 0.0001 ? m_uniformProperties.margin / data.yScale() : m_uniformProperties.margin;
 
         const qreal quadW = windowGeo.width() + 2.0 * marginX;
         const qreal quadH = windowGeo.height() + 2.0 * marginY;
@@ -144,7 +144,7 @@ namespace KWin {
         const bool geometryMatches = qAbs(windowGeo.width()  - maximizeArea.width())  <= kEpsilon && qAbs(windowGeo.height() - maximizeArea.height()) <= kEpsilon;
         const bool isBeingTransformed = qAbs(data.xScale() - 1.0) > kScaleEpsilon || qAbs(data.yScale() - 1.0) > kScaleEpsilon || !qFuzzyIsNull(data.xTranslation()) || !qFuzzyIsNull(data.yTranslation());
         const bool maximized = geometryMatches && !isBeingTransformed;
-        const float radius = maximized ? 0.0f : m_radius;
+        const float radius = maximized ? 0.0f : m_uniformProperties.radius;
 
         QMatrix4x4 mvp = viewport.projectionMatrix();
         mvp.translate(windowGeo.x(), windowGeo.y());
@@ -159,11 +159,11 @@ namespace KWin {
         m_shader->setUniform("u_size", QVector2D(quadW, quadH));
         m_shader->setUniform("u_inner_size", QVector2D(windowGeo.width(), windowGeo.height()));
         m_shader->setUniform("u_radius", radius);
-        m_shader->setUniform("u_border", m_thickness);
+        m_shader->setUniform("u_border", m_uniformProperties.thickness);
 
         const float finalAlpha = 1.0f * static_cast<float>(data.opacity());
-        m_shader->setUniform("u_color1", QVector4D(m_color1[0], m_color1[1], m_color1[2], m_color1[3] * finalAlpha));
-        m_shader->setUniform("u_color2", QVector4D(m_color2[0], m_color2[1], m_color2[2], m_color2[3] * finalAlpha));
+        m_shader->setUniform("u_color1", QVector4D(m_uniformProperties.color1[0], m_uniformProperties.color1[1], m_uniformProperties.color1[2], m_uniformProperties.color1[3] * finalAlpha));
+        m_shader->setUniform("u_color2", QVector4D(m_uniformProperties.color2[0], m_uniformProperties.color2[1], m_uniformProperties.color2[2], m_uniformProperties.color2[3] * finalAlpha));
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

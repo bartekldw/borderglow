@@ -14,6 +14,8 @@
 #include <QColor>
 #include <QVector4D>
 
+#include "borderproperties.hpp"
+
 namespace KWin {
 
 // Core rendering effect for kwin_borders - paints a glowing SDF-based
@@ -27,18 +29,8 @@ namespace KWin {
         QHash<EffectWindow *, QRectF> m_lastGeometry;
         std::unique_ptr<GLShader> m_shader;
 
-        bool m_skipFullscreen = true;
-        bool m_drawOnNormalWindows = true;
-        bool m_drawOnDialogs = true;
-        bool m_drawOnDocks = false;
-        bool m_drawOnPopups = false;
-        bool m_drawOther = false;
-
-        QVector4D m_color1;
-        QVector4D m_color2;
-        float m_radius = 0.f;
-        float m_thickness = 0.f;
-        float m_margin = 0.f;
+        borderglow::modules::BehaviourProperties m_behaviourProperties;
+        borderglow::modules::UniformProperties m_uniformProperties;
 
     public:
         BorderGlow();
