@@ -1,0 +1,19 @@
+{
+    "KPlugin": {
+        "Name": "Border Glow",
+        "Description": "Draws a configurable border around detected windows",
+        "Version": "@PROJECT_VERSION@",
+        "License": "GPL-3.0-or-later",
+        "Category": "Appearance",
+        "EnabledByDefault": false,
+        "Authors": [{
+            "Name": "Bartek Ludew",
+            "Email": "bartekldwdev@gmail.com",
+            "Website": "https://github.com/bartekldw/borderglow",
+            "Username": "bartekldw"
+        }],
+        "Website": "https://github.com/bartekldw/borderglow",
+        "BugReportUrl": "https://github.com/bartekldw/borderglow/issues"
+    },
+    "X-KDE-ConfigModule": "kcm_borderglow"
+}
