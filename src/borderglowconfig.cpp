@@ -37,7 +37,7 @@ namespace KWin {
             QStringLiteral("/Effects"),
             QStringLiteral("org.kde.kwin.Effects"),
             QStringLiteral("reconfigureEffect"));
-        message.setArguments({QStringLiteral("borderglow_alpha")});
+        message.setArguments({QStringLiteral("borderglow")});
         QDBusConnection::sessionBus().send(message);
     }
 
