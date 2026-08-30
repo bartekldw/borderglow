@@ -42,6 +42,19 @@ namespace KWin {
         }
 
         connect(effects, &EffectsHandler::windowClosed, this, &BorderGlow::slotWindowClosed);
+
+        connect(effects, &EffectsHandler::windowDeleted, this, [this](EffectWindow *w) {
+            const auto it = m_lastGeometry.constFind(w);
+            if (it != m_lastGeometry.cend()) {
+                w->addLayerRepaint(it.value());
+                m_lastGeometry.erase(it);
+            }
+        });
+
+        connect(effects, &EffectsHandler::desktopChanged, this, [](VirtualDesktop *, VirtualDesktop *, EffectWindow *) {
+            effects->addRepaintFull();
+        });
+
         reconfigure(ReconfigureAll);
     }
 
@@ -99,13 +112,22 @@ namespace KWin {
 // both the current and previous frame geometry so stale border pixels are cleared
 
     void BorderGlow::prePaintWindow(RenderView *view, EffectWindow *w, WindowPrePaintData &data) {
-        const QRectF current = w->frameGeometry().adjusted(-m_uniformProperties.margin, -m_uniformProperties.margin, m_uniformProperties.margin, m_uniformProperties.margin);
+        if (m_shader && borderglow::glowRules().canGlow(w, m_behaviourProperties)) {
+            const qreal m = m_uniformProperties.margin;
+            const QRectF current = w->frameGeometry().adjusted(-m, -m, m, m);
 
-        w->addLayerRepaint(current);
-        if (m_lastGeometry.contains(w)) {
-            w->addLayerRepaint(m_lastGeometry[w]);
+            w->addLayerRepaint(current);
+            const auto it = m_lastGeometry.constFind(w);
+            if (it != m_lastGeometry.cend() && it.value() != current) {
+                w->addLayerRepaint(it.value());
+            }
+            m_lastGeometry[w] = current;
+
+            data.setTranslucent();
+        } else {
+            m_lastGeometry.remove(w);
         }
-        m_lastGeometry[w] = current;
+
         effects->prePaintWindow(view, w, data);
     }
 
@@ -144,9 +166,18 @@ namespace KWin {
         // Excluding transformed windows avoids the false positive
 
         const bool geometryMatches = qAbs(windowGeo.width()  - maximizeArea.width())  <= kEpsilon && qAbs(windowGeo.height() - maximizeArea.height()) <= kEpsilon;
-        const bool isBeingTransformed = qAbs(data.xScale() - 1.0) > kScaleEpsilon || qAbs(data.yScale() - 1.0) > kScaleEpsilon || !qFuzzyIsNull(data.xTranslation()) || !qFuzzyIsNull(data.yTranslation());
-        const bool maximized = geometryMatches && !isBeingTransformed;
+        const bool isBeingScaled = qAbs(data.xScale() - 1.0) > kScaleEpsilon || qAbs(data.yScale() - 1.0) > kScaleEpsilon;
+        const bool maximized = geometryMatches && !isBeingScaled;
         const float radius = maximized ? 0.0f : m_uniformProperties.radius;
+
+        const bool isAnimating = isBeingScaled || !qFuzzyIsNull(data.xTranslation()) || !qFuzzyIsNull(data.yTranslation());
+
+        if (isAnimating) {
+            const qreal m = m_uniformProperties.margin;
+            QRectF painted(windowGeo.x() + data.xTranslation(), windowGeo.y() + data.yTranslation(), windowGeo.width()  * data.xScale(), windowGeo.height() * data.yScale());
+            painted.adjust(-m, -m, m, m);
+            effects->addRepaint(RectF(painted));
+        }
 
         QMatrix4x4 mvp = viewport.projectionMatrix();
         mvp.translate(windowGeo.x() * dpr, windowGeo.y() * dpr);
