@@ -30,6 +30,10 @@
             <label>Draw on other windows</label>
             <default>false</default>
         </entry>
+        <entry name="DisableRadiusMaximized" type="Bool">
+            <label>Disable border radius on maximized windows (experimental)</label>
+            <default>true</default>
+        </entry>
     </group>
 
     <group name="Appearance">

@@ -14,6 +14,7 @@ namespace borderglow::modules {
         bool drawOnDocks = false;
         bool drawOnPopups = false;
         bool drawOther = false;
+        bool disableRadiusMaximized = true;
     };
 
     struct UniformProperties {

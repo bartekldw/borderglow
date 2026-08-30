@@ -79,6 +79,7 @@ namespace KWin {
         m_behaviourProperties.drawOnDocks = BorderGlowSettings::drawDocks();
         m_behaviourProperties.drawOnPopups = BorderGlowSettings::drawPopups();
         m_behaviourProperties.drawOther = BorderGlowSettings::drawOther();
+        m_behaviourProperties.disableRadiusMaximized = BorderGlowSettings::disableRadiusMaximized();
 
         m_uniformProperties.color1 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor1());
         m_uniformProperties.color2 = borderglow::modules::QColorToVec4(BorderGlowSettings::gradientColor2());
@@ -167,8 +168,8 @@ namespace KWin {
 
         const bool geometryMatches = qAbs(windowGeo.width()  - maximizeArea.width())  <= kEpsilon && qAbs(windowGeo.height() - maximizeArea.height()) <= kEpsilon;
         const bool isBeingScaled = qAbs(data.xScale() - 1.0) > kScaleEpsilon || qAbs(data.yScale() - 1.0) > kScaleEpsilon;
-        const bool maximized = geometryMatches && !isBeingScaled;
-        const float radius = maximized ? 0.0f : m_uniformProperties.radius;
+        const bool maximized = geometryMatches && !isBeingScaled; 
+        const float radius = maximized && m_behaviourProperties.disableRadiusMaximized ? 0.f : m_uniformProperties.radius;
 
         const bool isAnimating = isBeingScaled || !qFuzzyIsNull(data.xTranslation()) || !qFuzzyIsNull(data.yTranslation());
 
