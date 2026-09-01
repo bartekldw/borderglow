@@ -33,3 +33,6 @@ dist/
 
 # Generated metadata
 /metadata.json
+
+# CMake
+CMakeFiles/

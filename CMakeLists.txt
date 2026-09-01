@@ -5,13 +5,15 @@ cmake_minimum_required(VERSION 3.16)
 project(borderglow VERSION 1.0 LANGUAGES CXX)
 
 set(QT_MIN_VERSION "6.5.0")
-set(KF_MIN_VERSION "6.0.0")
+set(KWIN_MIN_VERSION "6.7.4")
+set(ECM_MIN_VERSION "6.5.0")
+set(KF_MIN_VERSION "6.5.0")
 set(QT_DEFAULT_MAJOR_VERSION 6)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
+find_package(ECM ${ECM_MIN_VERSION} REQUIRED NO_MODULE)
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} ${CMAKE_MODULE_PATH})
 
 include(KDEInstallDirs)
@@ -24,7 +26,7 @@ endif()
 
 find_package(Qt6 ${QT_MIN_VERSION} REQUIRED COMPONENTS Core Gui Widgets DBus)
 find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS CoreAddons Config ConfigWidgets KCMUtils I18n)
-find_package(KWin REQUIRED)
+find_package(KWin ${KWIN_MIN_VERSION} REQUIRED)
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/metadata.json.in
