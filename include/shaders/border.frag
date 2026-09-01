@@ -1,7 +1,7 @@
 /*
  * kwin_borders KWin plugin
  * SPDX-FileCopyrightText: 2026 Bartłomiej Ludew <bartekldw>
- * SPDX-License-Identifier: MIT
+ * SPDX-License-Identifier: GPL-3.0-or-later
 */
 
 #ifdef GL_ES
