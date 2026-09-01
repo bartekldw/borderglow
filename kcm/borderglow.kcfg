@@ -39,12 +39,12 @@
     <group name="Appearance">
         <entry name="GradientColor1" type="Color">
             <label>First gradient color</label>
-            <default>255,0,128</default>
+            <default>0,255,200</default>
         </entry>
 
         <entry name="GradientColor2" type="Color">
             <label>Second gradient color</label>
-            <default>0,128,255</default>
+            <default>255,0,200</default>
         </entry>
         
         <entry name="BorderRadius" type="Int">
