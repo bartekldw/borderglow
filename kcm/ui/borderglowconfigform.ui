@@ -4,177 +4,224 @@
  <widget class="QWidget" name="BorderGlowConfigForm">
   <layout class="QVBoxLayout" name="mainLayout">
    <item>
-    <widget class="QCheckBox" name="kcfg_SkipFullscreen">
-     <property name="text">
-      <string>Hide border on fullscreen windows</string>
+    <widget class="QTabWidget" name="configTabs">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="kcfg_DrawNormalWindows">
-     <property name="text">
-      <string>Draw on normal windows</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="kcfg_DrawDialogs">
-     <property name="text">
-      <string>Draw on dialogs</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="kcfg_DrawDocks">
-     <property name="text">
-      <string>Draw on docks</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="kcfg_DrawPopups">
-     <property name="text">
-      <string>Draw on popups</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="kcfg_DrawOther">
-     <property name="text">
-      <string>Draw on other windows</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="disableRadiusLayout">
-     <item>
-      <widget class="QCheckBox" name="kcfg_DisableRadiusMaximized">
-       <property name="text">
-        <string>Disable border radius on maximized windows (experimental)</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="KContextualHelpButton" name="disableRadiusHelp">
-       <property name="contextualHelpText">
-        <string>Removes the corner radius on maximized windows so the glow does not clip against the screen edges.
+     <widget class="QWidget" name="glowConfigTab">
+      <attribute name="title">
+       <string>Glow Config</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="glowConfigTabLayout">
+       <item>
+        <layout class="QFormLayout" name="colorFormLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="gradientColor1Label">
+           <property name="text">
+            <string>Gradient color 1:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="KColorButton" name="kcfg_GradientColor1"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="gradientColor2Label">
+           <property name="text">
+            <string>Gradient color 2:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="KColorButton" name="kcfg_GradientColor2"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="borderRadiusLabel">
+           <property name="text">
+            <string>Border radius:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <layout class="QHBoxLayout" name="borderRadiusLayout">
+           <item>
+            <widget class="QSlider" name="kcfg_BorderRadius">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::TicksBelow</enum>
+             </property>
+             <property name="tickInterval">
+              <number>4</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="borderRadiusPreview">
+             <property name="minimum">
+              <number>0</number>
+             </property>
+             <property name="maximum">
+              <number>32</number>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="borderThicknessLabel">
+           <property name="text">
+            <string>Border thickness:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <layout class="QHBoxLayout" name="borderThicknessLayout">
+           <item>
+            <widget class="QSlider" name="kcfg_BorderThickness">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="tickPosition">
+              <enum>QSlider::TicksBelow</enum>
+             </property>
+             <property name="tickInterval">
+              <number>1</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="borderThicknessPreview">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>6</number>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="disableRadiusLayout">
+         <item>
+          <widget class="QCheckBox" name="kcfg_DisableRadiusMaximized">
+           <property name="text">
+            <string>Disable border radius on maximized windows (experimental)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="KContextualHelpButton" name="disableRadiusHelp">
+           <property name="contextualHelpText">
+            <string>Removes the corner radius on maximized windows so the glow does not clip against the screen edges.
 
 Note: the maximized state is inferred from the window's geometry so detection is not always accurate. A normal window that happens to match the maximized size will also be drawn with zero radius. This will be improved in a future release.</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="disableRadiusSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>0</width>
-         <height>0</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QFormLayout" name="colorFormLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="gradientColor1Label">
-       <property name="text">
-        <string>Gradient color 1:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="KColorButton" name="kcfg_GradientColor1"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="gradientColor2Label">
-       <property name="text">
-        <string>Gradient color 2:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="KColorButton" name="kcfg_GradientColor2"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="borderRadiusLabel">
-       <property name="text">
-        <string>Border radius:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <layout class="QHBoxLayout" name="borderRadiusLayout">
-       <item>
-        <widget class="QSlider" name="kcfg_BorderRadius">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="tickPosition">
-          <enum>QSlider::TicksBelow</enum>
-         </property>
-         <property name="tickInterval">
-          <number>4</number>
-         </property>
-        </widget>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="disableRadiusSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QSpinBox" name="borderRadiusPreview">
-         <property name="minimum">
-          <number>0</number>
+        <spacer name="glowConfigTabSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="maximum">
-          <number>32</number>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
          </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
+        </spacer>
        </item>
       </layout>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="borderThicknessLabel">
-       <property name="text">
-        <string>Border thickness:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <layout class="QHBoxLayout" name="borderThicknessLayout">
+     </widget>
+     <widget class="QWidget" name="blacklistTab">
+      <attribute name="title">
+       <string>Blacklist</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="blacklistTabLayout">
        <item>
-        <widget class="QSlider" name="kcfg_BorderThickness">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="tickPosition">
-          <enum>QSlider::TicksBelow</enum>
-         </property>
-         <property name="tickInterval">
-          <number>1</number>
+        <widget class="QCheckBox" name="kcfg_SkipFullscreen">
+         <property name="text">
+          <string>Hide border on fullscreen windows</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="borderThicknessPreview">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>6</number>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
+        <widget class="QCheckBox" name="kcfg_DrawNormalWindows">
+         <property name="text">
+          <string>Draw on normal windows</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="kcfg_DrawDialogs">
+         <property name="text">
+          <string>Draw on dialogs</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="kcfg_DrawDocks">
+         <property name="text">
+          <string>Draw on docks</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="kcfg_DrawPopups">
+         <property name="text">
+          <string>Draw on popups</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="kcfg_DrawOther">
+         <property name="text">
+          <string>Draw on other windows</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="blacklistTabSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
-     </item>
-    </layout>
+     </widget>
+    </widget>
    </item>
   </layout>
  </widget>
