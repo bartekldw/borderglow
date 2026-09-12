@@ -36,3 +36,14 @@ dist/
 
 # CMake
 CMakeFiles/
+
+# Linux
+.directory
+.Trash-*
+*~
+.fuse_hidden*
+.nfs* 
+.cache/
+*.swp
+*.swo
+.viminfo
